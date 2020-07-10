@@ -1,4 +1,4 @@
-# weather-application
+# Weather-application
 
 Application you can use to check weather data of your city
 

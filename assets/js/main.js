@@ -1,6 +1,7 @@
 function fetchWeatherInformation(event) {
   var city = $("#city").val();
   var apiKey = "c5cb20c8c2a0f5cb1e3536e94636a45d";
+
   if (!city) {
     $("#weather-data").html(`<p>Please enter a city name</p>`);
     return;
@@ -11,21 +12,22 @@ function fetchWeatherInformation(event) {
             loading...
         </div>`
   );
+  console.log(city);
 
   fetch(
-    `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey})`,
+    `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${apiKey}`,
     {
       method: "GET",
     }
   )
     .then((response) => {
       if (response.status == 404) {
-        console.log(response);
         $("#weather-data").html(`<p>No weather data found for ${city}</p>`);
       } else if (response.status == 429) {
         $("#weather-data").html(`<p>Too many requests.Try later</p>`);
       } else {
-        $("#weather-data").html(`<p>${response}</p>`);
+        console.log(response);
+        $("#weather-data").html(`<p>Weather data found for ${city} found</p>`);
       }
     })
     .catch((err) => {

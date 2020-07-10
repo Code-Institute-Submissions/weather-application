@@ -10,8 +10,29 @@
     <script src="assets/js/main.js"></script>
   </head>
   <body>
-    <div class="header"></div>
-    <div class="body"></div>
-    <div class="footer"></div>
+    <div class="header">
+      <h1>
+        Zocha
+      </h1>
+      <p>Use Zocha today to check the weather data of your city</p>
+    </div>
+    <div class="body">
+      <h2>
+        Enter the name of your city
+      </h2>
+      <form>
+        <input
+          type="text"
+          id="city"
+          value="nairobi"
+          oninput="fetchWeatherInformation()"
+        />
+
+        <div id="weather-data"></div>
+      </form>
+    </div>
+    <div class="footer">
+      <h3>Made By Augustine Muema</h3>
+    </div>
   </body>
 </html>

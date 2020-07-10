@@ -12,32 +12,43 @@ function fetchWeatherInformation(event) {
             loading...
         </div>`
   );
-  console.log(city);
 
   fetch(
-    `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${apiKey}`,
+    `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${apiKey}`,
     {
       method: "GET",
     }
   )
     .then((response) => {
-      return response.json();
-    })
-    .then(function (response) {
       if (response.status == 404) {
         $("#weather-data").html(`<p>No weather data found for ${city}</p>`);
       } else if (response.status == 429) {
         $("#weather-data").html(`<p>Too many requests.Try later</p>`);
-      } else {
-        console.log(response);
+      } else if (response.status == 200) {
+        return response.json();
+      }
+    })
+    .then(function (res) {
+      if (typeof res == "object") {
         $("#weather-data").html(
-          `<p>Weather data found for ${city} found ${JSON.stringify(
-            response
-          )}</p>`
+          `
+          <p>${res["name"]},
+           ${res["sys"]["country"]}, ${res["weather"][0]["description"]}  </p>
+           <p>${toCelsius(res["main"]["temp"])},
+            temperature from ${toCelsius(res["main"]["temp_min"])} to
+            ${toCelsius(res["main"]["temp_max"])}
+           </p>
+
+          `
         );
       }
     })
     .catch((err) => {
-      $("#weather-data").html(`<p>${err}</p>`);
+      $("#weather-data").html(`<p> Something is wrong ${err}</p>`);
     });
+}
+
+function toCelsius(kel) {
+  var cels = kel - 273.15;
+  return cels.toFixed(2) + "°С";
 }

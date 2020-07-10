@@ -21,13 +21,20 @@ function fetchWeatherInformation(event) {
     }
   )
     .then((response) => {
+      return response.json();
+    })
+    .then(function (response) {
       if (response.status == 404) {
         $("#weather-data").html(`<p>No weather data found for ${city}</p>`);
       } else if (response.status == 429) {
         $("#weather-data").html(`<p>Too many requests.Try later</p>`);
       } else {
         console.log(response);
-        $("#weather-data").html(`<p>Weather data found for ${city} found</p>`);
+        $("#weather-data").html(
+          `<p>Weather data found for ${city} found ${JSON.stringify(
+            response
+          )}</p>`
+        );
       }
     })
     .catch((err) => {
